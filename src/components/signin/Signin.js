@@ -58,14 +58,19 @@ const Signin = ({ authenticated, setAuthenticated }) => {
             }}
           />
         </Form.Group>
-
-        {errorMessage !== "" ? (
-          <Form.Text className="text-muted">{errorMessage}</Form.Text>
-        ) : (
-          ""
-        )}
-
-        <Button variant="primary" type="submit" onClick={login}>
+        <Form.Group>
+          {errorMessage !== "" ? (
+            <Form.Text className="text-muted">{errorMessage}</Form.Text>
+          ) : (
+            <br />
+          )}
+        </Form.Group>
+        <Button
+          className="submit"
+          variant="primary"
+          type="submit"
+          onClick={login}
+        >
           Submit
         </Button>
       </Form>

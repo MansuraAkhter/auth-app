@@ -8,6 +8,8 @@ html {
   color: #2e2e2e;
 }
 .App {
+  min-height: 700px;
   display: flex;
+  justify-content: center;
   align-items: center;
 }

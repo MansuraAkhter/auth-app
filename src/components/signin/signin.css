@@ -1,4 +1,12 @@
 .form {
-  align-items: center;
+  border: 5px solid #0050ff;
+  border-radius: 5px;
+  padding: 30px;
+}
+
+form {
+  display: flex;
+}
+.submit {
   align-self: center;
 }
