@@ -1,25 +1,55 @@
-import logo from './logo.svg';
-import './App.css';
+import { useEffect, useState } from "react";
+import "./App.css";
+import Signin from "./components/signin/Signin.js";
+import WelcomePage from "./components/WelcomePage";
+import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+
+  // check if user has previously signed in if he is signed in
+  // skip sign in
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setAuthenticated(false);
+    } else {
+      setAuthenticated(true);
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <BrowserRouter>
+        <Routes>
+          {!authenticated && (
+            <Route
+              path="/"
+              element={
+                <Signin
+                  authenticated={authenticated}
+                  setAuthenticated={setAuthenticated}
+                />
+              }
+            />
+          )}
+          {authenticated && (
+            <Route
+              path="/welcome"
+              element={
+                <WelcomePage
+                  authenticated={authenticated}
+                  setAuthenticated={setAuthenticated}
+                />
+              }
+            />
+          )}
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
 
 export default App;
+
+const name = localStorage.getItem("age");
