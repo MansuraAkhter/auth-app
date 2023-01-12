@@ -11,6 +11,7 @@ function App() {
   // skip sign in
   useEffect(() => {
     const token = localStorage.getItem("token");
+    console.log(token);
     if (!token) {
       setAuthenticated(false);
     } else {
@@ -22,28 +23,25 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-          {!authenticated && (
-            <Route
-              path="/"
-              element={
-                <Signin
-                  authenticated={authenticated}
-                  setAuthenticated={setAuthenticated}
-                />
-              }
-            />
-          )}
-          {authenticated && (
-            <Route
-              path="/welcome"
-              element={
-                <WelcomePage
-                  authenticated={authenticated}
-                  setAuthenticated={setAuthenticated}
-                />
-              }
-            />
-          )}
+          <Route
+            path="/"
+            element={
+              <Signin
+                authenticated={authenticated}
+                setAuthenticated={setAuthenticated}
+              />
+            }
+          />
+
+          <Route
+            path="/welcome"
+            element={
+              <WelcomePage
+                authenticated={authenticated}
+                setAuthenticated={setAuthenticated}
+              />
+            }
+          />
         </Routes>
       </BrowserRouter>
     </div>

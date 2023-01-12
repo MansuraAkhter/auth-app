@@ -1,16 +1,23 @@
 import { Button, Form } from "react-bootstrap";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import "./signin.css";
 import config from "../../utils/Config";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 
-const Signin = ({ authenticated, setAuthenticated }) => {
+const Signin = (props) => {
+  const { authenticated, setAuthenticated } = props;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (authenticated) {
+      navigate("/welcome");
+    }
+  }, [authenticated]);
 
   async function login(event) {
     event.preventDefault();
@@ -29,14 +36,14 @@ const Signin = ({ authenticated, setAuthenticated }) => {
       }
     } catch (err) {
       console.log(err);
-      setErrorMessage(err);
+      setErrorMessage(err.message);
     }
   }
   return (
     <div className="form">
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
+          <Form.Label>Email address </Form.Label>
           <Form.Control
             type="email"
             placeholder="Enter email"
@@ -48,7 +55,7 @@ const Signin = ({ authenticated, setAuthenticated }) => {
         </Form.Group>
 
         <Form.Group className="mb-3" controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
+          <Form.Label>Password </Form.Label>
           <Form.Control
             type="password"
             placeholder="Password"

@@ -6,7 +6,14 @@
 
 form {
   display: flex;
+  flex-direction: column;
 }
 .submit {
+  padding: 10px;
   align-self: center;
+  background-color: #005eff;
+  border-color: #005eff;
+  border-radius: 3px;
+  color: white;
+  font-weight: 2px;
 }

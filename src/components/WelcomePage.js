@@ -9,23 +9,27 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Config from "../utils/Config";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 const WelcomePage = ({ authenticated, setAuthenticated }) => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
-  async function handleClick() {
-    try {
-      const res = await axios.get(`${Config.BASE_URL}/api/users`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      });
-      setUsers(res.data.data);
-      console.log(res.data.data);
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    console.log("Welcome Page");
+    async function getUsers() {
+      try {
+        const res = await axios.get(`${Config.BASE_URL}/api/users`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        });
+        setUsers(res.data.data);
+        console.log(res.data.data);
+      } catch (err) {
+        console.log(err);
+      }
     }
-  }
+    getUsers();
+  }, []);
 
   const logout = () => {
     setAuthenticated(false);
@@ -35,7 +39,7 @@ const WelcomePage = ({ authenticated, setAuthenticated }) => {
   return (
     <div>
       <h1>welcome!</h1>
-      <button onClick={handleClick}>See all users</button>
+      <button>See all users</button>
       <button onClick={logout}>Log-out</button>
       <div className="users">
         {users.map((user) => (
