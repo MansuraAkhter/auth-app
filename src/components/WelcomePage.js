@@ -33,13 +33,13 @@ const WelcomePage = ({ authenticated, setAuthenticated }) => {
 
   const logout = () => {
     setAuthenticated(false);
-    localStorage.clear();
+    localStorage.removeItem("token");
     navigate(-1);
   };
   return (
     <div>
       <h1>welcome!</h1>
-      <button>See all users</button>
+      {/* <button>See all users</button> */}
       <button onClick={logout}>Log-out</button>
       <div className="users">
         {users.map((user) => (
