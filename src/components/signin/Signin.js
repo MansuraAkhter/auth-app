@@ -5,19 +5,17 @@ import "./signin.css";
 import config from "../../utils/Config";
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
+import { signedIn } from "../../Redux/actions";
+import store from "../../Redux/store";
+import { useSelector } from "react-redux";
 
-const Signin = (props) => {
-  const { authenticated, setAuthenticated } = props;
+const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (authenticated) {
-      navigate("/welcome");
-    }
-  }, [authenticated]);
+  let authenticated = useSelector((state) => state.authenticated);
 
   async function login(event) {
     event.preventDefault();
@@ -29,7 +27,9 @@ const Signin = (props) => {
 
       if (res.data.message == "success") {
         localStorage.setItem("token", res.data.data.Token);
-        setAuthenticated(true);
+        console.log(res.data.data.Id);
+        store.dispatch(signedIn(res.data.data.Id));
+        console.log(store.getState());
         navigate("/welcome");
       } else {
         setErrorMessage(res.data.message);
@@ -39,6 +39,7 @@ const Signin = (props) => {
       setErrorMessage(err.message);
     }
   }
+  if (authenticated) return <Navigate to="/welcome" />;
   return (
     <div className="form">
       <Form>

@@ -2,52 +2,38 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import Signin from "./components/signin/Signin.js";
 import WelcomePage from "./components/WelcomePage";
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import ProtectedRoute from "./utils/ProtectedRoute";
+import { Provider } from "react-redux";
+import store from "./Redux/store";
+import {
+  getByTestId,
+  getElementError,
+  renderHook,
+} from "@testing-library/react";
+import { keyboardImplementationWrapper } from "@testing-library/user-event/dist/keyboard";
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false);
-
-  // check if user has previously signed in if he is signed in
-  // skip sign in
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log(token);
-    if (!token) {
-      setAuthenticated(false);
-    } else {
-      setAuthenticated(true);
-    }
-  }, []);
-
   return (
-    <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <Signin
-                authenticated={authenticated}
-                setAuthenticated={setAuthenticated}
-              />
-            }
-          />
+    <Provider store={store}>
+      <div className="App">
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Signin />} />
 
-          <Route
-            path="/welcome"
-            element={
-              <WelcomePage
-                authenticated={authenticated}
-                setAuthenticated={setAuthenticated}
-              />
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </div>
+            <Route
+              path="/welcome"
+              element={
+                <ProtectedRoute>
+                  <WelcomePage />
+                </ProtectedRoute>
+              }
+            />
+          </Routes>
+        </BrowserRouter>
+      </div>
+    </Provider>
   );
 }
 
 export default App;
-
-const name = localStorage.getItem("age");

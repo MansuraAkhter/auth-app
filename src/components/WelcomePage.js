@@ -1,16 +1,12 @@
-// TODO
-
-// get user info from api endpoint by sending a get request with header and token
-// Hint for token:
-// token is in localstorage (token from localstorage.getItem("token")
-// have to send authorization headers
-//
-
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Config from "../utils/Config";
 import { useState, useEffect } from "react";
-const WelcomePage = ({ authenticated, setAuthenticated }) => {
+import store from "../Redux/store";
+import { signedOut } from "../Redux/actions";
+import { Link } from "react-router-dom";
+
+const WelcomePage = () => {
   const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -32,14 +28,15 @@ const WelcomePage = ({ authenticated, setAuthenticated }) => {
   }, []);
 
   const logout = () => {
-    setAuthenticated(false);
+    console.log("loggedOut");
+    store.dispatch(signedOut(false));
     localStorage.removeItem("token");
     navigate(-1);
   };
   return (
     <div>
       <h1>welcome!</h1>
-      {/* <button>See all users</button> */}
+
       <button onClick={logout}>Log-out</button>
       <div className="users">
         {users.map((user) => (
@@ -52,6 +49,7 @@ const WelcomePage = ({ authenticated, setAuthenticated }) => {
             <br />
           </div>
         ))}
+        <Link to="/">Go to sign in</Link>
       </div>
     </div>
   );
