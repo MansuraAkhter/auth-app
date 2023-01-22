@@ -1,15 +1,13 @@
 * {
   padding: 0;
   margin: 0;
+  max-width: "1200px";
 }
 
-html {
-  font-family: sans-serif;
-  color: #2e2e2e;
+.linkText {
+  text-decoration: none;
+  color: black;
 }
-.App {
-  min-height: 700px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.active {
+  color: #1976d2;
 }
