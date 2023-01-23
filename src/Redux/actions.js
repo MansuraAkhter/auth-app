@@ -20,9 +20,9 @@ export function signedOut(Id) {
   };
 }
 
-export function checkToken() {
-  return {
-    type: actions.CHECK_TOKEN,
-    payload: {},
-  };
-}
+// export function checkToken() {
+//   return {
+//     type: actions.CHECK_TOKEN,
+//     payload: {},
+//   };
+// }

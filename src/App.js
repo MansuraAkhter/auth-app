@@ -9,25 +9,28 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import { Provider } from "react-redux";
 import store from "./Redux/store";
 import { checkToken } from "./Redux/actions";
-import { ThemeProvider } from "@emotion/react";
+import { PersistGate } from "redux-persist/integration/react";
+import { persistor } from "./Redux/store";
 
 function App() {
-  useEffect(() => {
-    store.dispatch(checkToken());
-  }, []);
+  // useEffect(() => {
+  //   store.dispatch(checkToken());
+  // }, []);
   return (
     <Provider store={store}>
-      <div className="App">
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Signin />} />
-            <Route element={<Layout />}>
-              <Route path="/welcome" element={<WelcomePage />} />
-              <Route path="/profile" element={<ProfilePage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </div>
+      <PersistGate loading={null} persistor={persistor}>
+        <div className="App">
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Signin />} />
+              <Route element={<Layout />}>
+                <Route path="/welcome" element={<WelcomePage />} />
+                <Route path="/profile" element={<ProfilePage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </div>
+      </PersistGate>
     </Provider>
   );
 }

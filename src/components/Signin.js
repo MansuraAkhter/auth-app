@@ -6,13 +6,26 @@ import { Navigate } from "react-router-dom";
 import { signedIn } from "../Redux/actions";
 import store from "../Redux/store";
 import { useSelector } from "react-redux";
-import { Typography, Button, Container, TextField, Grid } from "@mui/material";
-
+import {
+  Typography,
+  Button,
+  Container,
+  TextField,
+  Grid,
+  OutlinedInput,
+  InputLabel,
+  FormControl,
+} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import { Visibility } from "@mui/icons-material";
+import { VisibilityOff } from "@mui/icons-material";
 const Signin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [error, setError] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
 
@@ -66,29 +79,47 @@ const Signin = () => {
             alignItems: "center",
           }}
         >
-          <TextField
-            variant="outlined"
-            label="Enter email"
-            value={email}
-            onChange={(event) => {
-              setEmail(event.target.value);
-            }}
-            required
-            sx={{ margin: "10px 0px", width: "320px" }}
-            error={error}
-          />
-          <TextField
-            variant="outlined"
-            label="Password"
-            type="password"
-            value={password}
-            onChange={(event) => {
-              setPassword(event.target.value);
-            }}
-            required
-            sx={{ margin: "10px 0px", width: "320px" }}
-            error={error}
-          />
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="display-email">Enter email </InputLabel>
+            <OutlinedInput
+              id="diaplay-email"
+              label="Enter email"
+              value={email}
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+              required
+              sx={{ margin: "10px 0px", width: "320px" }}
+              error={error}
+            />
+          </FormControl>
+
+          <FormControl variant="outlined">
+            <InputLabel htmlFor="display-name">Password </InputLabel>
+            <OutlinedInput
+              id="display-name"
+              label="Password"
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+              }}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              sx={{ margin: "10px 0px", width: "320px" }}
+              error={error}
+            />
+          </FormControl>
+
           {errorMessage !== "" ? (
             <Typography color="#485056">{errorMessage}</Typography>
           ) : (
